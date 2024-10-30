@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product List</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    {% extends "index.html" %}
+    {% block title %}Product List{% endblock %}
+    {% block content %}
+
+    <h1>Enter Product Name</h1>
+    <form method="POST">
+        <label for="product_name_input">Product Name:</label>
+        <input type="text" name="product_name" id="product_name_input" required>
+        <button type="submit">Enter</button>
+    </form>
+    
+    <h1>Remove Product</h1>
+    <form method="POST">
+        <label for="product_to_remove_input">Product to Remove:</label>
+        <input type="text" name="product_to_remove" id="product_to_remove_input">
+        <button type="submit" name="remove_product">Remove</button>
+    </form>
+    {% if error_message %}
+    <p class="error">{{ error_message }}</p>
+    {% endif %}
+
+    <h2>Product List</h2>
+    <table border="1">
+        <tr>
+            <th>Product ID</th>
+            <th>Product Name</th>
+            <th>Removed</th>
+        </tr>
+        {% for product in products %}
+        <tr>
+            <td>{{ product.id }}</td>
+            <td>{{ product.name }}</td>
+            <td>{% if product.removed %}Yes{% else %}No{% endif %}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <br>
+    <a href="{{ url_for('index') }}">Return to the main page</a>
+
+    {% endblock %}
+</body>
+</html>
